@@ -1,4 +1,6 @@
+from pawpal_system import Owner, Pet, Task, Scheduler
 import streamlit as st
+from datetime import datetime
 
 st.set_page_config(page_title="PawPal+", page_icon="🐾", layout="centered")
 
@@ -67,6 +69,13 @@ if st.session_state.tasks:
     st.table(st.session_state.tasks)
 else:
     st.info("No tasks yet. Add one above.")
+    if "owner_obj" not in st.session_state:
+       st.session_state.owner_obj = Owner(owner_id=1, name=owner_name)
+
+if "scheduler_obj" not in st.session_state:
+    st.session_state.scheduler_obj = Scheduler()
+else:
+    st.info("No tasks yet. Add one above.")
 
 st.divider()
 
@@ -74,9 +83,64 @@ st.subheader("Build Schedule")
 st.caption("This button should call your scheduling logic once you implement it.")
 
 if st.button("Generate schedule"):
-    st.warning(
-        "Not implemented yet. Next step: create your scheduling logic (classes/functions) and call it here."
+    scheduler = st.session_state.scheduler_obj
+
+    # clear old tasks
+    scheduler.tasks = []
+
+    # convert UI tasks → Task objects
+    for i, t in enumerate(st.session_state.tasks):
+        task = Task(
+            task_id=i,
+            title=t["title"],
+            task_type="General",
+            due_time=datetime.now(),
+            priority=1 if t["priority"] == "high" else 2
+        )
+        scheduler.add_task(task)
+
+    scheduler.sort_tasks()
+
+    st.success("Schedule Generated!")
+
+    st.subheader("Today's Schedule")
+
+    for task in scheduler.tasks:
+        st.write(f"{task.title} | Priority: {task.priority}")
+
+    st.markdown(
+        """
+Suggested approach:
+1. Design your UML (draft).
+2. Create class stubs (no logic).
+3. Implement scheduling behavior.
+4. Connect your scheduler here and display results.
+"""
     )
+
+    # convert UI tasks → Task objects
+    scheduler.tasks = []
+
+    for i, t in enumerate(st.session_state.tasks):
+        task = Task(
+            task_id=i,
+            title=t["title"],
+            task_type="General",
+            due_time=datetime.now(),
+            priority=1 if t["priority"] == "high" else 2
+        )
+        scheduler.add_task(task)
+
+    scheduler.sort_tasks()
+
+    st.success("Schedule Generated!")
+
+    st.subheader("Today's Schedule")
+
+    for task in scheduler.tasks:
+        st.write(
+            f"{task.title} | Priority: {task.priority}"
+        )
     st.markdown(
         """
 Suggested approach:
