@@ -6,13 +6,14 @@
 
 - Briefly describe your initial UML design.
 - What classes did you include, and what responsibilities did you assign to each?
-My initial UML design includes four main classes: Owner, Pet, Task, and Scheduler. The Owner class manages information about the pet owner and their pets. The Pet class stores details about each pet and its care tasks. The Task class represents activities such as feeding, walking, medication, and vet appointments, including due time, priority, and completion status. The Scheduler class manages all tasks by organizing, sorting, and checking for scheduling conflicts. This design keeps each class responsible for a specific part of the system, making the application organized and easier to maintain.
+I designed PawPal+ using four main classes: Task, Pet, Owner, and Scheduler.
+Each class was responsible for a specific part of the system. Task stored details like time, priority, and recurrence. Pet managed a list of tasks. Owner stored multiple pets. Scheduler handled sorting, filtering, and organizing tasks into a daily schedule.
 
 **b. Design changes**
 
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
-After reviewing my class design with AI, I decided to keep the Scheduler as a separate class so that scheduling, sorting, and conflict detection are handled independently from the Owner and Pet classes. This makes the code more modular and easier to maintain.
+During implementation, I improved my design by adding a Scheduler class to centralize task management. I also adjusted Task to include recurring logic (daily/weekly) and improved sorting using due_time and priority. Some methods were refined to ensure cleaner separation of responsibilities.
 
 ---
 
@@ -27,6 +28,7 @@ After reviewing my class design with AI, I decided to keep the Scheduler as a se
 
 - Describe one tradeoff your scheduler makes.
 - Why is that tradeoff reasonable for this scenario?
+I used exact datetime matching for conflict detection instead of checking overlapping time ranges. This made the implementation simpler but less precise for real-world scheduling scenarios.
 
 ---
 
@@ -36,7 +38,13 @@ After reviewing my class design with AI, I decided to keep the Scheduler as a se
 
 - How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
 - What kinds of prompts or questions were most helpful?
+AI tools helped me design and debug my PawPal+ system by generating class structures, improving scheduling logic, and identifying bugs in my implementation. The most useful feature was iterative debugging, where I could quickly fix errors in both my backend and Streamlit UI.
 
+One AI suggestion I modified was adding overly complex scheduling logic. I simplified it to focus on clarity and maintainability.
+
+Using separate chat sessions helped me stay organized by separating design, implementation, and testing phases.
+
+Overall, I learned that AI is most effective when used as a support tool, while I act as the system architect making final design decisions.
 **b. Judgment and verification**
 
 - Describe one moment where you did not accept an AI suggestion as-is.
