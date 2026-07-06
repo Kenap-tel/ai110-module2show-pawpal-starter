@@ -1,7 +1,6 @@
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List
-
 
 @dataclass
 class Task:
@@ -11,11 +10,20 @@ class Task:
     due_time: datetime
     priority: int
     completed: bool = False
-    recurring: bool = False
+    recurring: str = None  # "daily", "weekly", or None
 
     def mark_complete(self):
         """Mark the task as completed."""
         self.completed = True
+
+        # Recurring logic
+        if self.recurring == "daily":
+            self.completed = False
+            self.due_time += timedelta(days=1)
+
+        elif self.recurring == "weekly":
+            self.completed = False
+            self.due_time += timedelta(weeks=1)
 
     def update_priority(self, priority):
         """Update the task priority."""
@@ -75,8 +83,8 @@ class Scheduler:
         self.tasks = [task for task in self.tasks if task.task_id != task_id]
 
     def sort_tasks(self):
-        """Sort tasks by due time and priority."""
-        self.tasks.sort(key=lambda task: (task.due_time, task.priority))
+     """Sort by time first, then priority (high priority first)."""
+     self.tasks.sort(key=lambda task: (task.due_time, -task.priority))
 
     def detect_conflicts(self):
         """Return tasks that have the same due time."""
@@ -93,3 +101,10 @@ class Scheduler:
         """Return today's tasks."""
         today = datetime.now().date()
         return [task for task in self.tasks if task.due_time.date() == today]
+    
+    def filter_tasks(self, completed=None):
+     """Filter tasks by completion status."""
+     if completed is None:
+        return self.tasks
+
+     return [task for task in self.tasks if task.completed == completed]
