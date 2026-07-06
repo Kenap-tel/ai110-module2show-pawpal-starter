@@ -66,7 +66,18 @@ pytest --cov
 Sample test output:
 
 ```
-# Paste your pytest output here
+# Paste your test output here
+==================================================
+test session starts
+==================================================
+collected 4 items
+
+test_pawpal.py::test_mark_complete PASSED
+test_pawpal.py::test_add_task PASSED
+test_pawpal.py::test_recurring_task_daily PASSED
+test_pawpal.py::test_sort_tasks PASSED
+
+==================== 4 passed =====================
 ```
 
 ## 📐 Smarter Scheduling
@@ -75,19 +86,19 @@ Sample test output:
 
 | Feature | Method(s) | Notes |
 |---------|-----------|-------|
-| Task sorting | | e.g., by priority, duration |
-| Filtering | | e.g., skip tasks if time runs out |
-| Conflict handling | | e.g., overlapping time slots |
-| Recurring tasks | | e.g., daily vs. weekly |
+| Task sorting |Scheduler.sort_tasks()|Sorts tasks by due time and priority|
+| Filtering | |Scheduler.filter_tasks() |Filters completed or incomplete tasks|
+| Conflict handling ||Scheduler.detect_conflicts()| Detects tasks scheduled at the same time|
+| Recurring tasks |Task.mark_complete() |Daily and weekly recurring tasks automatically update their due date|
 
 ## 📸 Demo Walkthrough
 
 Describe your app in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+1. Enter the owner's name and pet information.
+2. Add one or more pet care tasks with a title, duration, and priority.
+3. Click **Add Task** to add tasks to the schedule.
+4. Click **Generate Schedule** to organize tasks by time and priority.
+5. View the generated schedule and any conflict warnings displayed by the app.
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
